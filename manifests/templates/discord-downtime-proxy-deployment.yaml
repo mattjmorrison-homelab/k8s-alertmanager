@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alertmanager-discord-downtime-proxy
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alertmanager-discord-downtime-proxy
+  template:
+    metadata:
+      labels:
+        app: alertmanager-discord-downtime-proxy
+    spec:
+      containers:
+        - name: alertmanager-discord-proxy
+          image: "{{ .Values.discordProxy.image.repository }}@{{ .Values.discordProxy.image.digest }}"
+          ports:
+            - containerPort: 9094
+          env:
+            - name: DISCORD_WEBHOOK
+              valueFrom:
+                secretKeyRef:
+                  name: alertmanager-discord
+                  key: DOWNTIME_WEBHOOK_URL

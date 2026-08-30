@@ -14,9 +14,17 @@ data:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 4h
+      routes:
+        - receiver: discord-downtime
+          matchers:
+            - alertname = "PiNodeExporterDown"
 
     receivers:
       - name: discord
         webhook_configs:
           - url: 'http://alertmanager-discord-proxy.monitoring.svc:9094'
+            send_resolved: true
+      - name: discord-downtime
+        webhook_configs:
+          - url: 'http://alertmanager-discord-downtime-proxy.monitoring.svc:9094'
             send_resolved: true
