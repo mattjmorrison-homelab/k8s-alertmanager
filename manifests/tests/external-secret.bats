@@ -10,6 +10,6 @@ load helpers
   remote_ref_key=$(echo "$external_secret" | yq eval '.spec.data[] | select(.secretKey == "DOWNTIME_WEBHOOK_URL") | .remoteRef.key' -)
   remote_ref_property=$(echo "$external_secret" | yq eval '.spec.data[] | select(.secretKey == "DOWNTIME_WEBHOOK_URL") | .remoteRef.property' -)
 
-  [ "$remote_ref_key" = "homelab/alertmanager" ]
-  [ "$remote_ref_property" = "DOWNTIME_WEBHOOK_URL" ]
+  [ "$remote_ref_key" = "homelab/k8s-alertmanager/downtime-webhook-url" ]
+  [ "$remote_ref_property" = "value" ]
 }
