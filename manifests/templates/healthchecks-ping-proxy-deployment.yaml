@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthchecks-ping-proxy
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healthchecks-ping-proxy
+  template:
+    metadata:
+      labels:
+        app: healthchecks-ping-proxy
+    spec:
+      containers:
+        - name: nginx
+          image: "{{ .Values.healthchecksProxy.image.repository }}@{{ .Values.healthchecksProxy.image.digest }}"
+          ports:
+            - containerPort: 9095
+          env:
+            - name: PING_URL
+              valueFrom:
+                secretKeyRef:
+                  name: healthchecks-ping
+                  key: PING_URL
+          volumeMounts:
+            - name: nginx-template
+              mountPath: /etc/nginx/templates
+      volumes:
+        - name: nginx-template
+          configMap:
+            name: healthchecks-ping-proxy-template

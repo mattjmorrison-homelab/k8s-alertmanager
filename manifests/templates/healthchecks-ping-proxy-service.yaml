@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: healthchecks-ping-proxy
+  namespace: monitoring
+spec:
+  selector:
+    app: healthchecks-ping-proxy
+  ports:
+    - port: 9095
+      targetPort: 9095
