@@ -10,6 +10,11 @@ discordProxy:
     # reference available.
     digest: sha256:7d27cd8494b269fe592cf6a9d7f6bdf14ac628bba34c381dc43cf533eaa95158
 
+healthchecksProxy:
+  image:
+    repository: nginx
+    digest: sha256:42c68eab6f7e22611786a9fe1d1c019e275c50185bd54b8f75dc2b9184322703 # 1.30.6 (stable)
+
 verify:
   image:
     repository: alpine

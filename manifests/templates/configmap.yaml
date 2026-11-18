@@ -18,6 +18,10 @@ data:
         - receiver: discord-downtime
           matchers:
             - alertname = "PiNodeExporterDown"
+        - receiver: healthchecks
+          matchers:
+            - alertname = "Watchdog"
+          repeat_interval: 5m
 
     receivers:
       - name: discord
@@ -28,3 +32,7 @@ data:
         webhook_configs:
           - url: 'http://alertmanager-discord-downtime-proxy.monitoring.svc:9094'
             send_resolved: true
+      - name: healthchecks
+        webhook_configs:
+          - url: 'http://healthchecks-ping-proxy.monitoring.svc:9095'
+            send_resolved: false
