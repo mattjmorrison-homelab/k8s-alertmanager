@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: healthchecks-ping-proxy-template
+  namespace: monitoring
+data:
+  default.conf.template: |
+    server {
+      listen 9095;
+      location / {
+        proxy_pass $PING_URL;
+      }
+    }
